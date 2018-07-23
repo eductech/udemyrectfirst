@@ -1,78 +1,37 @@
 'use strict';
 
-var app = {
-  title: 'Indecision App',
-  // subtitle: 'Put your life in the hands of the computer',
-  options: ['one', 'two']
+var isHidden = true;
+
+var changeStat = function changeStat() {
+  isHidden = !isHidden;
+  console.log(isHidden);
+  renderApp();
 };
 
-var template = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    app.title
-  ),
-  React.createElement(
-    'p',
-    null,
-    'no subtitle' && app.subtitle
-  ),
-  app.options.length > 0 ? 'here your options' : 'no options',
-  React.createElement(
-    'ol',
+var app = document.getElementById("app");
+
+var renderApp = function renderApp() {
+  var template = React.createElement(
+    'div',
     null,
     React.createElement(
-      'li',
+      'h1',
       null,
-      'Item one'
+      'Visibility Toggle'
     ),
     React.createElement(
-      'li',
+      'button',
+      { onClick: changeStat },
+      !!isHidden ? 'Show' : 'Hide'
+    ),
+    !!isHidden ? undefined : React.createElement(
+      'p',
       null,
-      'Item two'
+      'some text'
     )
-  )
-);
+  );
 
-var user = {
-  name: 'Mike'
-  // location: 'New York'
+  ReactDOM.render(template, app);
 };
-function getLocation(location) {
-  return !!location ? location : 'Unknown';
-}
 
-var templateTwo = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    user.name
-  ),
-  React.createElement(
-    'p',
-    null,
-    'This is info ',
-    getLocation(user.location)
-  ),
-  React.createElement(
-    'p',
-    null,
-    'This is info 2'
-  )
-);
-
-var templateThree = React.createElement(
-  'h1',
-  null,
-  React.createElement('p', null),
-  React.createElement('p', null),
-  React.createElement('p', null)
-);
-
-var appRoot = document.getElementById('app');
-
-ReactDOM.render(template, appRoot);
+renderApp();
