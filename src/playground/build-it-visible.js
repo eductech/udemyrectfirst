@@ -1,25 +1,30 @@
+class ToggleComponent extends React.Component {
+  constructor(props) {
+    super(props);
 
-let isHidden = true;
+    this.handleToggle = this.handleToggle.bind(this);
+    this.state = {
+      visibile: true
+    }
+  }
 
-const changeStat = () => {
-  isHidden = !isHidden;
-  console.log(isHidden);
-  renderApp();
-};
+  handleToggle() {
+    this.setState((prevState) => {
+      return {
+        visibile: !prevState.visibile
+      }
+    });
+  }
 
-const app = document.getElementById("app");
+  render() {
+    return (
+      <div>
+        <h1>Toggle Example</h1>
+        <button onClick={this.handleToggle}>Toggle</button>
+        {this.state.visibile ? <p>Hello! Push the button again to hide me</p> : null}
+      </div>
+    );
+  }
+}
 
-const renderApp = () => {
-  const template = (
-    <div>
-      <h1>Visibility Toggle</h1>
-      <button onClick={changeStat}>{ !!isHidden ? 'Show' : 'Hide' }</button>
-      { !!isHidden ? undefined : <p>some text</p> }
-    </div>
-  );
-  
-  ReactDOM.render(template, app);
-};
-
-renderApp();
-
+ReactDOM.render(<ToggleComponent />, document.getElementById('app'));
